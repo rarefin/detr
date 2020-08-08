@@ -12,8 +12,7 @@ from util.misc import (NestedTensor, accuracy, get_world_size, interpolate,
 
 from .backbone import build_backbone
 from .matcher import build_matcher
-from .segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
-                           dice_loss, sigmoid_focal_loss)
+from .segmentation import (DETRsegm, dice_loss, sigmoid_focal_loss)
 from .transformer import build_transformer
 
 
@@ -293,9 +292,7 @@ class MLP(nn.Module):
 
 
 def build(args):
-    num_classes = 20 if args.dataset_file != 'coco' else 91
-    if args.dataset_file == "coco_panoptic":
-        num_classes = 250
+    num_classes = 10
     device = torch.device(args.device)
 
     backbone = build_backbone(args)
@@ -325,16 +322,9 @@ def build(args):
         weight_dict.update(aux_weight_dict)
 
     losses = ['labels', 'boxes', 'cardinality']
-    if args.masks:
-        losses += ["masks"]
     criterion = SetCriterion(num_classes, matcher=matcher, weight_dict=weight_dict,
                              eos_coef=args.eos_coef, losses=losses)
     criterion.to(device)
     postprocessors = {'bbox': PostProcess()}
-    if args.masks:
-        postprocessors['segm'] = PostProcessSegm()
-        if args.dataset_file == "coco_panoptic":
-            is_thing_map = {i: i <= 90 for i in range(201)}
-            postprocessors["panoptic"] = PostProcessPanoptic(is_thing_map, True, threshold=0.85)
 
     return model, criterion, postprocessors

@@ -3,6 +3,7 @@ import torch.utils.data
 import torchvision
 
 from .coco import build as build_coco
+from .transform_mnist import ToTensor, Normalize, Compose
 
 
 def get_coco_api_from_dataset(dataset):
@@ -23,3 +24,15 @@ def build_dataset(image_set, args):
         from .coco_panoptic import build as build_coco_panoptic
         return build_coco_panoptic(image_set, args)
     raise ValueError(f'dataset {args.dataset_file} not supported')
+
+
+def get_transforms(split):
+    if split == 'train':
+        return Compose([ToTensor(), Normalize()])
+    elif split == 'val':
+        return Compose([ToTensor(), Normalize()])
+    elif split == 'test':
+        return Compose([ToTensor(), Normalize()])
+    else:
+        raise ValueError(f'unknown {split}')
+
