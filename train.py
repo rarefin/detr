@@ -80,7 +80,7 @@ def get_args_parser():
 
     # dataset parameters
     parser.add_argument('--dataset_file', default='multi-mnist')
-    parser.add_argument('--data_dir', default='/content/Multi-MNIST', type=str)
+    parser.add_argument('--data_dir', default='/content/drive/My Drive/Colab Notebooks/datasets/Multi-MNIST', type=str)
     parser.add_argument('--coco_panoptic_path', type=str)
     parser.add_argument('--remove_difficult', action='store_true')
 
