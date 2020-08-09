@@ -94,6 +94,7 @@ def get_args_parser():
                         help='start epoch')
     parser.add_argument('--eval', action='store_true')
     parser.add_argument('--num_workers', default=2, type=int)
+    parser.add_argument('--num_classes', default=10, type=int)
 
     return parser
 
@@ -112,7 +113,6 @@ def main(args):
     random.seed(seed)
 
     model, criterion, postprocessors = build_model(args)
-
     model.to(device)
 
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
