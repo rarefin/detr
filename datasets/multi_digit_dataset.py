@@ -79,6 +79,8 @@ class MultiDigitDataset(data.Dataset):
 
         return img, target
 
+        # return img, target["boxes"], target["labels"]
+
     def __len__(self):
         return len(self.filenames)
 

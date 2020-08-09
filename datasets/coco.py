@@ -156,12 +156,12 @@ def build(image_set, args):
     img_folder, ann_file = PATHS[image_set]
     dataset = CocoDetection(img_folder, ann_file, transforms=make_coco_transforms(image_set), return_masks=False)
     return dataset
-
+#
 # args = {'coco_path': '/Volumes/MyDrive/Research/UploadAI/coco', 'masks': False}
 #
 # dataset = build(image_set='train', args=args)
 #
 # image, target = next(iter(dataset))
 #
-# print(image.shape)
+# print(image)
 # print(target)

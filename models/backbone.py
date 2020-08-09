@@ -54,14 +54,6 @@ class FrozenBatchNorm2d(torch.nn.Module):
         return x * scale + bias
 
 
-class Identity(nn.Module):
-    def __init__(self):
-        super(Identity, self).__init__()
-
-    def forward(self, x):
-        return x
-
-
 class BackboneBase(nn.Module):
 
     def __init__(self, backbone: nn.Module, train_backbone: bool, num_channels: int, return_interm_layers: bool):
@@ -75,7 +67,7 @@ class BackboneBase(nn.Module):
             return_layers = {'layer4': 0}
         self.body = IntermediateLayerGetter(backbone, return_layers=return_layers)
         self.body.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
-        self.body.maxpool = Identity()
+        del self.body.maxpool
         self.num_channels = num_channels
 
     def forward(self, tensor_list):

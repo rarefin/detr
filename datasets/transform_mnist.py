@@ -241,7 +241,6 @@ class RandomErasing(object):
 
 class Normalize(object):
     def __call__(self, image, target=None):
-        image = image / 255.
         if target is None:
             return image, None
         target = target.copy()

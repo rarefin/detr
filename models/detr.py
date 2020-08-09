@@ -306,14 +306,16 @@ def build(args):
         num_queries=args.num_queries,
         aux_loss=args.aux_loss,
     )
-    if args.masks:
-        model = DETRsegm(model)
+
+    # if args.masks:
+    #     model = DETRsegm(model)
+
     matcher = build_matcher(args)
     weight_dict = {'loss_ce': 1, 'loss_bbox': args.bbox_loss_coef}
     weight_dict['loss_giou'] = args.giou_loss_coef
-    if args.masks:
-        weight_dict["loss_mask"] = args.mask_loss_coef
-        weight_dict["loss_dice"] = args.dice_loss_coef
+    # if args.masks:
+    #     weight_dict["loss_mask"] = args.mask_loss_coef
+    #     weight_dict["loss_dice"] = args.dice_loss_coef
     # TODO this is a hack
     if args.aux_loss:
         aux_weight_dict = {}
