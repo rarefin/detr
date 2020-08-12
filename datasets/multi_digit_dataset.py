@@ -83,17 +83,3 @@ class MultiDigitDataset(data.Dataset):
 
     def __len__(self):
         return len(self.filenames)
-
-# import datasets.transform_mnist as T
-#
-# transform = T.Compose([
-#         T.ToTensor(),
-#         T.Normalize()
-#     ])
-#
-# dataset = MultiDigitDataset(data_dir='/Volumes/MyDrive/Research/UploadAI/Multi-MNIST', split='test', transform=transform)
-#
-# img, target = next(iter(dataset))
-#
-# print(img.shape)
-# print(target)
